@@ -1,0 +1,107 @@
+﻿@model  MVCDropDownProject.Models.UserModel
+@{
+    ViewBag.Title = "UserForm";
+}
+
+
+
+<h2>Form</h2>
+<div id="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Basic Form Elements
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                @using (Html.BeginForm("UserForm", "Home", FormMethod.Post))
+                                {
+                                    @Html.HiddenFor(m => m.UserId);
+                                    <div class="form-group">
+                                        <label>FirstName</label>
+
+                                        @Html.TextBoxFor(m => m.UFirstName, new { @class = "form-control", @required = "required" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>LastName</label>
+
+                                        @Html.TextBoxFor(m => m.ULastName, new { @class = "form-control", @required = "required" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mobile</label>
+
+                                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @required = "required" })
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email</label>
+
+                                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", @required = "required" })
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Country</label>
+
+                                     
+                                        @Html.DropDownListFor(m=>m.CID, ViewBag.CityList as SelectList, "---Select Country---", new { @class = "form-control", @onchange = "BindClass()", @required = "required" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>State</label>
+
+                                        @Html.DropDownListFor(m=>m.SID, ViewBag.StateList as SelectList, "---Select City---", new { @class = "form-control", @required = "required" })
+                                       
+                                    </div>
+                                   
+                                    <button type="submit" class="btn btn-success">Submit</button>
+
+                                }
+                            </div>
+
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+<script type="text/javascript">
+    function BindClass() {
+        var CID = $('#CID').val();
+        $.ajax({
+            url: '@Url.Action("FillClass","Home")',
+            type: "GET",
+            dataType: "JSON",
+            data: { CID: CID },
+            success: function (classes) {
+
+                $("#SID").html("");
+                var optionhtml1 = '<option value="">' + "--Select City--- " + '</option>';
+                $("#SID").append(optionhtml1);
+                $.each(classes, function (i) {
+                    var optionhtml = '<option value="' + classes[i].Value + '">' + classes[i].Text + '</option>';
+                    $("#SID").append(optionhtml);
+                });
+            }
+        });
+    }
+</script>
+

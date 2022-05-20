@@ -1,0 +1,40 @@
+﻿@model List<MVCDropDownProject.Models.UserModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<table class="table table-hover table-bordered table-responsive">
+    <tr>
+        <th>UserId</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Country</th>
+        <th>State</th>
+        <th>Edit</th>
+        <th>Delete</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.UserId</td>
+
+    <td>
+        @item.UFirstName  @item.ULastName
+    </td>
+
+
+
+    <td>@item.email</td>
+    <td>@item.Mobile</td>
+    <td>@item.CName</td>  
+    <td>@item.SName</td>
+    <td><a href="@Url.Action("edit", "Home", new{@item.UserId}) " class="btn-group btn-warning" )>Edit</a></td>
+    <td><a href="@Url.Action("delete", "Home", new{@item.UserId}) " class="btn-group btn-danger" )>Delete</a></td>
+</tr>
+
+    }
+
+</table>
